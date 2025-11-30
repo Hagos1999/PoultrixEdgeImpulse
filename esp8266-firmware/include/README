@@ -1,0 +1,8 @@
+// README placeholder for include directory
+// Header files for Poultrix Edge AI firmware will be placed here
+
+// Example usage:
+// - Custom sensor libraries
+// - AI model headers from Edge Impulse
+// - Configuration files
+// - Hardware abstraction layers

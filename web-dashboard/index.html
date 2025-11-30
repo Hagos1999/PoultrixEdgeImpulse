@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poultrix Edge AI - Smart Poultry Management System</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Poultrix Dashboard CSS -->
+    <link rel="stylesheet" href="css/poultrix-dashboard.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Poultrix Dashboard JavaScript -->
+    <script type="module" src="js/poultrix-dashboard.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #ff9a3c 0%, #ffcd3c 100%);">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/poultrix.png" width="30" height="30" class="me-2" alt="Poultrix Logo">
+                <span style="color: black; font-weight: bold;">POULTRIX EDGE AI</span>
+                <small style="color: rgba(0,0,0,0.8); font-size: 0.7rem; margin-left: 8px;">Smart • Autonomous • Efficient</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" style="color: black; font-weight: bold;" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: black;" href="#analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color: black;" href="#ai-insights">AI Insights</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-brain me-2"></i>
+                                    Poultrix Edge AI - Smart Brooding Management System
+                                </h4>
+                                <div>
+                                    <i id="status-icon" class="fas fa-wifi text-success me-2"></i>
+                                    <span id="connection-status" class="badge bg-success">Connected</span>
+                                    <button class="btn btn-outline-light btn-sm ms-2" onclick="refreshData()">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-1"><strong>Device:</strong> poultrix_esp_001</p>
+                            <p class="mb-1"><strong>Location:</strong> smart_brooder_house_1</p>
+                            <p class="mb-1"><strong>Competition:</strong> Edge Impulse Innovation Challenge 2025</p>
+                            <p class="mb-0"><strong>Last Update:</strong> <span id="last-update">--:--:--</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Stats -->
+            <div class="row">
+                <!-- Temperature -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card temperature-card border-success">
+                        <div class="card-body text-center">
+                            <i class="fas fa-thermometer-half text-danger fa-2x mb-2"></i>
+                            <div class="stat-value" id="current-temp">--°C</div>
+                            <div class="stat-label">Temperature</div>
+                            <div class="mt-2">
+                                <small>Target: <span id="current-setpoint">--°C</span></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humidity -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-tint text-primary fa-2x mb-2"></i>
+                            <div class="stat-value" id="current-humidity">--%</div>
+                            <div class="stat-label">Humidity</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Air Quality -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-smog text-success fa-2x mb-2"></i>
+                            <div class="stat-value" id="current-gas">-- ppm</div>
+                            <div class="stat-label">Air Quality</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Control -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-robot text-info fa-2x mb-2"></i>
+                            <div class="stat-value" id="current-pid">--</div>
+                            <div class="stat-label">AI Control Output</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Health Row -->
+            <div class="row">
+                <!-- System Health -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-microchip text-success fa-2x mb-2"></i>
+                            <div class="stat-value" id="free-heap">-- KB</div>
+                            <div class="stat-label">Free Memory</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WiFi Signal -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-wifi text-primary fa-2x mb-2"></i>
+                            <div class="stat-value" id="wifi-signal">-- dBm</div>
+                            <div class="stat-label">WiFi Signal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Grid -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-cogs me-2"></i>Smart Control Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-grid">
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-fire text-danger me-2"></i>Heater:</span>
+                                    <span id="heater-status" class="badge bg-secondary">Inactive</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-fan text-primary me-2"></i>Ventilation:</span>
+                                    <span id="fan-status" class="badge bg-secondary">Inactive</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-thermometer text-warning me-2"></i>Temp Sensor:</span>
+                                    <span id="temp-valid" class="badge bg-secondary">Unknown</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-tint text-info me-2"></i>Humidity Sensor:</span>
+                                    <span id="humidity-valid" class="badge bg-secondary">Unknown</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-smog text-success me-2"></i>Air Quality Sensor:</span>
+                                    <span id="gas-valid" class="badge bg-secondary">Unknown</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><i class="fas fa-clock text-secondary me-2"></i>System Uptime:</span>
+                                    <span id="uptime" class="text-muted">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Temperature Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="temperatureChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-area me-2"></i>Humidity Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="humidityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-smog me-2"></i>Air Quality Monitor</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="gasChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edge AI Section -->
+            <div class="row" id="ai-insights">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-brain me-2"></i>Edge AI Insights</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ai-insight-card">
+                                        <i class="fas fa-lightbulb text-warning fa-2x mb-3"></i>
+                                        <h6>Smart Predictions</h6>
+                                        <p class="text-muted">AI-powered environmental forecasting for optimal brooding conditions</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ai-insight-card">
+                                        <i class="fas fa-shield-alt text-success fa-2x mb-3"></i>
+                                        <h6>Health Monitoring</h6>
+                                        <p class="text-muted">Real-time anomaly detection and early warning systems</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="ai-insight-card">
+                                        <i class="fas fa-chart-bar text-info fa-2x mb-3"></i>
+                                        <h6>Performance Analytics</h6>
+                                        <p class="text-muted">Data-driven insights for improved productivity and efficiency</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <p class="mb-0 text-muted">
+                                <i class="fas fa-trophy me-1"></i>
+                                2025 <strong style="color: #ff9a3c;">POULTRIX EDGE AI</strong> - Edge Impulse Innovation Challenge
+                                <br><small>Smart • Autonomous • Efficient Poultry Management</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

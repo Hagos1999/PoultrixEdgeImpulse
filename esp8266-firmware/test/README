@@ -1,0 +1,8 @@
+// README placeholder for test directory
+// Unit tests for Poultrix Edge AI firmware will be placed here
+
+// Test categories:
+// - Sensor validation tests
+// - Control algorithm tests
+// - Communication tests
+// - AI model performance tests
