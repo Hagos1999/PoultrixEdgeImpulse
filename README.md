@@ -54,7 +54,7 @@ Poultrix Edge AI provides:
 - Advanced PID control algorithms
 - Multi-parameter environmental optimization
 - Predictive maintenance alerts
-- Anomaly detection and early warning systems
+- Anomaly detection in chicken droppings and early warning systems
 
 ### 📱 Real-time Monitoring
 - Live sensor data streaming
@@ -73,6 +73,7 @@ Poultrix Edge AI provides:
 - Offline operation capability
 - Enhanced data privacy and security
 - Scalable deployment model
+- Edge AI to detect diseases from chicken droppings
 
 ---
 
@@ -109,6 +110,7 @@ PoultrixEdgeImpulse/
 ### Prerequisites
 - PlatformIO IDE or Arduino IDE
 - Firebase account
+- Portenta H7 for disease detection from chicken droppings
 - ESP8266 NodeMCU v2 board
 - Required sensors and components
 
@@ -228,10 +230,8 @@ PoultrixEdgeImpulse/
 
 ## 👥 Team Information
 
-**Project Lead**: [Your Name]
-**Institution**: [Your Institution]
-**Competition**: Edge Impulse Innovation Challenge 2025
-**Category**: Smart Agriculture / IoT Solutions
+**Project Lead**: Hagos Abdallah Jemal
+**Team**: Poultrix
 
 ---
 
@@ -239,9 +239,9 @@ PoultrixEdgeImpulse/
 
 For questions about this project or collaboration opportunities:
 
-- **Email**: [your.email@domain.com]
-- **GitHub**: [your-github-username]
-- **LinkedIn**: [your-linkedin-profile]
+- **Email**: hagosabdallah99@gmail.com
+- **GitHub**: Hagos1999
+- **LinkedIn**: https://www.linkedin.com/in/abdallah-hagos/
 
 ---
 
